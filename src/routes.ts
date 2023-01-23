@@ -23,8 +23,8 @@ const createEnterpriseController = new CreateEnterpriseController();
 const getEnterprisesController = new GetEnterprisesController();
 
 
-routes.post("/enterprises/", createEnterpriseController.handle);
-routes.get("/enterprises", getEnterprisesController.handle)
+routes.post("/enterprises/", ensureAuthenticateUser ,createEnterpriseController.handle);
+routes.get("/enterprises", ensureAuthenticateUser ,getEnterprisesController.handle);
 
 
 export { routes };

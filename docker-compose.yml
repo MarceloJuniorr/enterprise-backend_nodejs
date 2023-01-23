@@ -13,10 +13,19 @@ services:
       MYSQL_PASSWORD: Wils1980$
     ports:
       - 3306:3306
+    volumes:
+      - db:/var/lib/mysql
+
+
   app:
     build: .
     container_name: enterprise-backend_nodejs
     ports:
-      - 3000:3000
+      - 3001:3000
     volumes:
       - .:/app
+
+
+volumes:
+  db:
+    driver: local
