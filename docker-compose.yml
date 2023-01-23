@@ -1,0 +1,22 @@
+version: "3.7"
+
+services:
+
+  db:
+    image: mysql
+    container_name: mysqldb
+    restart: always
+    environment:
+      MYSQL_DATABASE: enterprise
+      MYSQL_ROOT_PASSWORD: Enterprise2022!
+      MYSQL_USER: stark
+      MYSQL_PASSWORD: Wils1980$
+    ports:
+      - 3306:3306
+  app:
+    build: .
+    container_name: enterprise-backend_nodejs
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/app

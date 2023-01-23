@@ -1,0 +1,46 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Users {
+  id       String @id @default(uuid())
+  username String @unique
+  password String
+
+  @@map("users")
+}
+
+model Enterprises {
+  id         String      @id @default(uuid())
+  cpf_cnpj   String      @unique
+  name       String
+  email      String?
+  active     Boolean     @default(true)
+  created_at DateTime    @default(now())  
+  Customers Customers[]
+
+
+  @@map("enterprises")
+}
+
+model Customers {
+  id            String      @id @default(uuid())
+  cpf           String      @unique
+  name          String
+  phone         String
+  email         String
+  id_enterprise String
+  active        Boolean     @default(true)
+  created_at    DateTime    @default(now()) 
+  enterprise    Enterprises @relation(fields: [id_enterprise], references: [id])
+
+  @@map("customers")
+}
