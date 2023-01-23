@@ -1,7 +1,6 @@
 import { prisma } from "../../../database/prismaClient";
 import { compare } from "bcrypt";
 import { sign } from "jsonwebtoken";
-import { env } from "../../../../env";
 
 interface IAuthenticateUser {
     username: string;
@@ -10,6 +9,8 @@ interface IAuthenticateUser {
 
 export class AuthenticateUserUseCase {
     async execute({username, password}: IAuthenticateUser) {
+
+        const secretHash =  "6bdc121614b67c643c46ab51dabea008"
 
         const user = await prisma.users.findFirst({
             where: {
@@ -26,7 +27,7 @@ export class AuthenticateUserUseCase {
             throw new Error ("Username or Password invalid")
         }
 
-        const token = sign({username}, env().SECRET_HASH , {
+        const token = sign({username}, secretHash , {
             subject: user.id,
             expiresIn: "1d"
         });

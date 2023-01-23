@@ -22,11 +22,10 @@ model Enterprises {
   id         String      @id @default(uuid())
   cpf_cnpj   String      @unique
   name       String
-  email      String?
+  email      String
   active     Boolean     @default(true)
   created_at DateTime    @default(now())  
   Customers Customers[]
-
 
   @@map("enterprises")
 }
@@ -37,6 +36,7 @@ model Customers {
   name          String
   phone         String
   email         String
+  birthday      DateTime    @db.Date
   id_enterprise String
   active        Boolean     @default(true)
   created_at    DateTime    @default(now()) 

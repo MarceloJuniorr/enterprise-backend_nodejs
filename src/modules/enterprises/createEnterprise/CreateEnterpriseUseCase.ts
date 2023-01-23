@@ -4,7 +4,7 @@ import { prisma } from "../../../database/prismaClient";
 interface ICreateEnterprise {
     cpf_cnpj : string;
     name: string;
-    email?: string;
+    email: string;
 }
 
 export class CreateEnterpriseUseCase {
