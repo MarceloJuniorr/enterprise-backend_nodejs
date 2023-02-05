@@ -14,14 +14,14 @@ services:
     ports:
       - 3306:3306
     volumes:
-      - db:/var/lib/mysql
+      - db:/Users/marcelojunior/mysql
 
 
   app:
     build: .
     container_name: enterprise-backend_nodejs
     ports:
-      - 3001:3000
+      - 3000:3000
     volumes:
       - .:/app
 

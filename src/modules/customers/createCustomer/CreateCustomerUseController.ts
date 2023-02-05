@@ -1,48 +1,52 @@
+import { type Customers } from "@prisma/client";
 import { prisma } from "../../../database/prismaClient";
 
 interface ICreateCustomer {
-    cpf: string;
-    name: string;
-    phone: string;
-    email: string;
-    id_enterprise: string;
-    birthday: string;
-
-
+  document: string;
+  name: string;
+  phone: string;
+  email: string;
+  idEnterprise: string;
+  birthday: string;
 }
 
 export class CreateCustomerUseCase {
-    async execute({cpf, name, phone, email, id_enterprise, birthday}: ICreateCustomer) {
-
-        const customerExists = await prisma.customers.findFirst({
-            where:{
-                cpf
-            }
-        })
-        if (customerExists) {
-            throw new Error("Customer already exists!");
-        }
-
-        const enterpriseExists = await prisma.enterprises.findFirst({
-            where: {
-                id: id_enterprise
-            }
-        })
-        if (!enterpriseExists) {
-            throw new Error("Enterprise not is valid!");
-        }
-
-        const customer = await prisma.customers.create({
-            data: {
-                cpf,
-                birthday,
-                name,
-                phone,
-                email,
-                id_enterprise
-            }
-        })
-        return customer
-
+  async execute({
+    document,
+    name,
+    phone,
+    email,
+    idEnterprise,
+    birthday,
+  }: ICreateCustomer): Promise<Customers> {
+    const customerExists = await prisma.customers.findFirst({
+      where: {
+        cpf: document,
+      },
+    });
+    if (customerExists != null) {
+      throw new Error("Customer already exists!");
     }
+
+    const enterpriseExists = await prisma.enterprises.findFirst({
+      where: {
+        id: idEnterprise,
+      },
+    });
+    if (enterpriseExists == null) {
+      throw new Error("Enterprise not is valid!");
+    }
+
+    const customer = await prisma.customers.create({
+      data: {
+        cpf: document,
+        birthday,
+        name,
+        phone,
+        email,
+        id_enterprise: idEnterprise,
+      },
+    });
+    return customer;
+  }
 }

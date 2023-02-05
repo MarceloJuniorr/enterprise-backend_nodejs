@@ -1,52 +1,45 @@
-import { prisma } from "../../../database/prismaClient"
-
+import { prisma } from "../../../database/prismaClient";
 
 interface IPatchCustomer {
-    id:             string,
-    cpf?:           string,
-    name?:          string,
-    phone?:         string,
-    email?:         string,
-    birthday?:      string,
-    id_enterprise?: string
+  id: string;
+  document?: string;
+  name?: string;
+  phone?: string;
+  email?: string;
+  birthday?: string;
+  idEnterprise?: string;
 }
 
-
 export class PatchCustomerUseCase {
-    async execute({ 
-        id, 
-        cpf, 
-        name, 
-        phone, 
-        email, 
-        birthday, 
-        id_enterprise }: IPatchCustomer ) {
+  async execute({
+    id,
+    document,
+    name,
+    phone,
+    email,
+    birthday,
+    idEnterprise,
+  }: IPatchCustomer): Promise<void> {
+    const customerExists = await prisma.customers.findFirst({
+      where: {
+        id,
+      },
+    });
 
-
-            const customerExists = await prisma.customers.findFirst({
-                where: {
-                    id
-                }
-            })
-
-            if (!customerExists) {
-                throw new Error("Customer is invalid");
-            }
-
-
-            if (id_enterprise) {
-                const enterpriseExists = await prisma.enterprises.findFirst({
-                    where: {
-                        id: id_enterprise
-                    }
-                })
-
-                if (!enterpriseExists) {
-                    throw new Error("Enterprise is invalid");
-                }
-            }
-
-            
-
+    if (customerExists == null) {
+      throw new Error("Customer is invalid");
     }
+
+    if (idEnterprise !== undefined) {
+      const enterpriseExists = await prisma.enterprises.findFirst({
+        where: {
+          id: idEnterprise,
+        },
+      });
+
+      if (enterpriseExists == null) {
+        throw new Error("Enterprise is invalid");
+      }
+    }
+  }
 }
