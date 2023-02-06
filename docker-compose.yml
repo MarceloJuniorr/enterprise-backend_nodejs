@@ -18,12 +18,16 @@ services:
 
 
   app:
-    build: .
-    container_name: enterprise-backend_nodejs
-    ports:
-      - 3000:3000
+    container_name: backend
+    platform: linux/amd64
+    build:
+      context: .
+      target: base
     volumes:
-      - .:/app
+      - "./app:/app"
+    command: yarn run dev
+    ports:
+      - 3000:3000 
 
 
 volumes:
