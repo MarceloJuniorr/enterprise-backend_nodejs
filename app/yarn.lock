@@ -2129,6 +2129,11 @@ rimraf@^3.0.2:
   dependencies:
     glob "^7.1.3"
 
+routeros-node@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/routeros-node/-/routeros-node-0.1.0.tgz#f4201eafb05ada3a2ac676a20098eef7a9f6b9ab"
+  integrity sha512-IDHVzqCXmlvNitO84AbCgMTnh+5nKCXiohvWyWxgJDF2p9oYNO9tWwxd1BDByK/J9CXdF6CZWG9lmoHy9QiBSw==
+
 run-parallel@^1.1.9:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/run-parallel/-/run-parallel-1.2.0.tgz#66d1368da7bdf921eb9d95bd1a9229e7f21a43ee"

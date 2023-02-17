@@ -6,6 +6,7 @@ import { DeleteCustomerController } from './modules/customers/deleteCustomer/Del
 import { GetCustomersController } from './modules/customers/getCustommers/GetCustomersController'
 import { CreateEnterpriseController } from './modules/enterprises/createEnterprise/CreateEnterpriseController'
 import { GetEnterprisesController } from './modules/enterprises/getEnterprises/GetEnterprisesController'
+import { GetUsersController } from './modules/mikroClient/hotspot/getUsers/GetUsersController'
 
 import { AuthenticateUserController } from './modules/users/authenticateUser/AuthenticateUserController'
 import { CreateUserController } from './modules/users/createUser/CreateUserController'
@@ -54,6 +55,14 @@ routes.delete(
   '/customers/',
   ensureAuthenticateUser,
   deleteCustomerController.handle
+)
+
+const getUsersController = new GetUsersController()
+
+routes.get(
+  '/mikrotik/hotspot/users',
+  getUsersController.handle
+
 )
 
 export { routes }
