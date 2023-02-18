@@ -9,7 +9,7 @@ export class GetUsersUseCase {
   async execute ({ name }: IGetUsers): Promise<any> {
     const routeros = new Routeros(credentialsMk)
 
-    const request = ['/ip/hotspot/user/print', '=.proplist=disabled, name,profile']
+    const request = ['/ip/hotspot/user/print', '=.proplist=disabled,name,profile']
 
     if (name != null) { request.push(`?name=${name}`) }
 

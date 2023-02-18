@@ -1,12 +1,14 @@
 import { Router } from 'express'
 import { ensureAuthenticateUser } from './middleweres/ensureAuthenticateUser'
 import { ensureDocumentValidator } from './middleweres/ensureDocumentValidator'
+import { ensurePostUserValidator } from './middleweres/ensurePostUserValidator'
 import { CreateCustomerController } from './modules/customers/createCustomer/CreateCustomerController'
 import { DeleteCustomerController } from './modules/customers/deleteCustomer/DeleteCustomerController'
 import { GetCustomersController } from './modules/customers/getCustommers/GetCustomersController'
 import { CreateEnterpriseController } from './modules/enterprises/createEnterprise/CreateEnterpriseController'
 import { GetEnterprisesController } from './modules/enterprises/getEnterprises/GetEnterprisesController'
 import { GetUsersController } from './modules/mikroClient/hotspot/getUsers/GetUsersController'
+import { PostUsersController } from './modules/mikroClient/hotspot/postUsers/PostUsersController'
 
 import { AuthenticateUserController } from './modules/users/authenticateUser/AuthenticateUserController'
 import { CreateUserController } from './modules/users/createUser/CreateUserController'
@@ -58,11 +60,16 @@ routes.delete(
 )
 
 const getUsersController = new GetUsersController()
+const postUsersController = new PostUsersController()
 
 routes.get(
   '/mikrotik/hotspot/users',
   getUsersController.handle
-
+)
+routes.post(
+  '/mikrotik/hotspot/users',
+  ensurePostUserValidator,
+  postUsersController.handle
 )
 
 export { routes }
