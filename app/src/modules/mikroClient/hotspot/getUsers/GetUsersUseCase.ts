@@ -3,13 +3,19 @@ import { credentialsMk } from '../../../../utils/env'
 
 interface IGetUsers {
   name?: string
+  getId?: boolean
 }
 
 export class GetUsersUseCase {
-  async execute ({ name }: IGetUsers): Promise<any> {
+  async execute ({ name, getId }: IGetUsers): Promise<any> {
     const routeros = new Routeros(credentialsMk)
+    let request: string[] = []
 
-    const request = ['/ip/hotspot/user/print', '=.proplist=disabled,name,profile']
+    if (getId === undefined || !getId) {
+      request = ['/ip/hotspot/user/print', '=.proplist=disabled,name,profile']
+    } else {
+      request = ['/ip/hotspot/user/print', '=.proplist=.id']
+    }
 
     if (name != null) { request.push(`?name=${name}`) }
 

@@ -7,6 +7,7 @@ import { DeleteCustomerController } from './modules/customers/deleteCustomer/Del
 import { GetCustomersController } from './modules/customers/getCustommers/GetCustomersController'
 import { CreateEnterpriseController } from './modules/enterprises/createEnterprise/CreateEnterpriseController'
 import { GetEnterprisesController } from './modules/enterprises/getEnterprises/GetEnterprisesController'
+import { DeleteUsersController } from './modules/mikroClient/hotspot/deleteUsers/DeleteUsersController'
 import { GetUsersController } from './modules/mikroClient/hotspot/getUsers/GetUsersController'
 import { PostUsersController } from './modules/mikroClient/hotspot/postUsers/PostUsersController'
 
@@ -59,17 +60,26 @@ routes.delete(
   deleteCustomerController.handle
 )
 
+// Mikrotik Interface
 const getUsersController = new GetUsersController()
 const postUsersController = new PostUsersController()
+const deleteUsersController = new DeleteUsersController()
 
 routes.get(
   '/mikrotik/hotspot/users',
+  ensureAuthenticateUser,
   getUsersController.handle
 )
 routes.post(
   '/mikrotik/hotspot/users',
+  ensureAuthenticateUser,
   ensurePostUserValidator,
   postUsersController.handle
+)
+routes.delete(
+  '/mikrotik/hotspot/users',
+  ensureAuthenticateUser,
+  deleteUsersController.handle
 )
 
 export { routes }
