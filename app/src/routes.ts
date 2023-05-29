@@ -1,16 +1,15 @@
 import { Router } from 'express'
 import { ensureAuthenticateUser } from './middleweres/ensureAuthenticateUser'
-import { ensureDocumentValidator } from './middleweres/ensureDocumentValidator'
 import { ensurePostUserValidator } from './middleweres/ensurePostUserValidator'
 import { CreateCustomerController } from './modules/customers/createCustomer/CreateCustomerController'
 import { DeleteCustomerController } from './modules/customers/deleteCustomer/DeleteCustomerController'
-import { GetCustomersController } from './modules/customers/getCustommers/GetCustomersController'
+import { FindCustomersController } from './modules/customers/findCustommers/FindCustomersController'
+import { UpdateCustomerController } from './modules/customers/updateCustomer/UpdateCustomerController'
 import { CreateEnterpriseController } from './modules/enterprises/createEnterprise/CreateEnterpriseController'
 import { GetEnterprisesController } from './modules/enterprises/getEnterprises/GetEnterprisesController'
 import { DeleteUsersController } from './modules/mikroClient/hotspot/deleteUsers/DeleteUsersController'
-import { GetUsersController } from './modules/mikroClient/hotspot/getUsers/GetUsersController'
-import { PostUsersController } from './modules/mikroClient/hotspot/postUsers/PostUsersController'
-
+import { GetUsersController } from './modules/mikroClient/getUsers/GetUsersController'
+import { PostUsersController } from './modules/mikroClient/hotspot/createUser/PostUsersController'
 import { AuthenticateUserController } from './modules/users/authenticateUser/AuthenticateUserController'
 import { CreateUserController } from './modules/users/createUser/CreateUserController'
 
@@ -40,24 +39,29 @@ routes.get(
 
 // Customers
 const createCustomerController = new CreateCustomerController()
-const getCustomersController = new GetCustomersController()
+const findCustomersController = new FindCustomersController()
 const deleteCustomerController = new DeleteCustomerController()
+const updateCustomerController = new UpdateCustomerController()
 
 routes.post(
   '/customers/',
   ensureAuthenticateUser,
-  ensureDocumentValidator,
   createCustomerController.handle
 )
 routes.get(
   '/customers/',
   ensureAuthenticateUser,
-  getCustomersController.handle
+  findCustomersController.handle
 )
 routes.delete(
   '/customers/',
   ensureAuthenticateUser,
   deleteCustomerController.handle
+)
+routes.patch(
+  '/customers/',
+  ensureAuthenticateUser,
+  updateCustomerController.handle
 )
 
 // Mikrotik Interface

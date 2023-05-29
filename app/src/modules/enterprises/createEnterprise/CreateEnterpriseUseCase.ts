@@ -1,5 +1,6 @@
 import { type Enterprises } from '@prisma/client'
 import { prisma } from '../../../database/prismaClient'
+import validateEmail from '../../../utils/validEmail'
 
 interface ICreateEnterprise {
   document: string
@@ -27,6 +28,11 @@ export class CreateEnterpriseUseCase {
 
     if (enterpriseExist != null) {
       throw new Error('Enterprise already exists!')
+    }
+
+    const emailIsValid = validateEmail(email)
+    if (!emailIsValid) {
+      throw new Error('Email is invalid')
     }
 
     const enterprise = await prisma.enterprises.create({

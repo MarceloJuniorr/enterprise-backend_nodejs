@@ -24,23 +24,24 @@ model Enterprises {
   name       String
   email      String
   active     Boolean     @default(true)
-  created_at DateTime    @default(now())  
+  created_at DateTime    @default(now())
   Customers Customers[]
 
   @@map("enterprises")
 }
 
 model Customers {
-  id            String      @id @default(uuid())
-  cpf           String      @unique
-  name          String
-  phone         String
-  email         String
-  birthday      DateTime    @db.Date
-  id_enterprise String
-  active        Boolean     @default(true)
-  created_at    DateTime    @default(now()) 
-  enterprise    Enterprises @relation(fields: [id_enterprise], references: [id])
+  id             String      @id @default(uuid())
+  cpf            String      @unique
+  name           String
+  phone          String
+  email          String
+  access_profile String      @default("1")
+  birthday       DateTime    @db.Date()
+  id_enterprise  String
+  active         Boolean     @default(true)
+  created_at     DateTime    @default(now())
+  enterprise     Enterprises @relation(fields: [id_enterprise], references: [id])
 
   @@map("customers")
 }
